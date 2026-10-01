@@ -3,9 +3,10 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "dev": "wrangler dev --local",
+    "build": "rm -rf dist && mkdir dist && cp -r public/. dist/ && cp src/index.js dist/_worker.js",
+    "dev": "npm run build && wrangler pages dev dist --d1 DB=751f25a2-edcf-4d80-9e20-757f0719d85d --local",
     "db:local": "wrangler d1 execute randesherkulesom --local --file=schema.sql",
-    "deploy": "wrangler deploy"
+    "deploy": "npm run build && wrangler pages deploy dist --project-name randesherkulesom --branch main"
   },
   "devDependencies": {
     "wrangler": "^4"

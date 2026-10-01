@@ -1,0 +1,24 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "randesherkulesom",
+  "main": "src/index.js",
+  "compatibility_date": "2026-09-01",
+  "workers_dev": true,
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": true
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "randesherkulesom",
+      "database_id": "751f25a2-edcf-4d80-9e20-757f0719d85d"
+    }
+  ],
+  "routes": [
+    { "pattern": "randesherkulesom.com", "custom_domain": true },
+    { "pattern": "www.randesherkulesom.com", "custom_domain": true }
+  ]
+}
