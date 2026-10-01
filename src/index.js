@@ -1,5 +1,4 @@
 // randesherkulesom.com: statické stránky + malé API na prihlášky (D1).
-const SLOTS = 13;
 const APEX = 'randesherkulesom.com';
 
 const SEC_HEADERS = {
@@ -41,18 +40,6 @@ async function safeEqual(a, b) {
   return crypto.subtle.timingSafeEqual(ha, hb);
 }
 
-async function pocet(env) {
-  const r = await env.DB.prepare('SELECT COUNT(*) AS n FROM prihlasky').first();
-  return r?.n ?? 0;
-}
-
-const volne = (n) => Math.max(1, SLOTS - n);
-
-async function stav(env) {
-  const n = await pocet(env);
-  return json({ pocet: n, volne: volne(n), spolu: SLOTS });
-}
-
 async function prihlaska(request, env) {
   const origin = request.headers.get('origin');
   if (origin && new URL(origin).host !== new URL(request.url).host) {
@@ -73,13 +60,26 @@ async function prihlaska(request, env) {
   if (clean(d.web, 200)) return json({ ok: true });
 
   const meno = clean(d.meno, 60);
-  const kontakt = clean(d.kontakt, 80);
   const termin = clean(d.termin, 60);
   const rande = clean(d.rande, 300);
   const sprava = clean(d.odkaz, 300);
+  const film = clean(d.film, 100);
+
+  // Instagram: povolíme @meno aj celý odkaz, uložíme ako @meno
+  let ig = clean(d.instagram, 80).replace(/^https?:\/\/(www\.)?instagram\.com\//i, '').replace(/[/?].*$/, '').replace(/^@/, '').replace(/\s+/g, '');
+  if (ig && !/^[A-Za-z0-9._]{1,30}$/.test(ig)) return json({ ok: false, chyba: 'Instagram vyzerá nesprávne. Napíš ho ako @meno.' }, 400);
+  if (ig) ig = '@' + ig;
+
+  // Telefón: číslice, +, medzery, pomlčky, zátvorky; aspoň 9 číslic
+  const tel = clean(d.telefon, 30);
+  if (tel && (!/^[0-9+()\-\s]+$/.test(tel) || tel.replace(/\D/g, '').length < 9 || tel.replace(/\D/g, '').length > 15)) {
+    return json({ ok: false, chyba: 'Telefón vyzerá nekompletne. Napíš ho aj s predvoľbou, napr. +421...' }, 400);
+  }
 
   if (meno.length < 2) return json({ ok: false, chyba: 'Napíš aspoň svoje meno.' }, 400);
-  if (kontakt.length < 3) return json({ ok: false, chyba: 'Potrebujeme Instagram alebo telefón, aby sa ti Herkules mohol ozvať.' }, 400);
+  if (!ig && !tel) return json({ ok: false, chyba: 'Potrebujeme Instagram alebo telefón, aby sa ti Herkules mohol ozvať.' }, 400);
+  if (film.length < 2) return json({ ok: false, chyba: 'Napíš svoj obľúbený film.' }, 400);
+  const kontakt = [ig && 'IG ' + ig, tel && 'Tel ' + tel].filter(Boolean).join(' | ');
 
   // ochrana pred záplavou: max 30 prihlášok za 10 minút
   const rec = await env.DB.prepare("SELECT COUNT(*) AS n FROM prihlasky WHERE created_at > datetime('now','-10 minutes')").first();
@@ -89,12 +89,11 @@ async function prihlaska(request, env) {
   const dup = await env.DB.prepare('SELECT id FROM prihlasky WHERE lower(kontakt) = lower(?)').bind(kontakt).first();
   if (!dup) {
     const ua = clean(request.headers.get('user-agent'), 200);
-    await env.DB.prepare('INSERT INTO prihlasky (meno, kontakt, termin, rande, sprava, ua) VALUES (?, ?, ?, ?, ?, ?)')
-      .bind(meno, kontakt, termin, rande, sprava, ua)
+    await env.DB.prepare('INSERT INTO prihlasky (meno, kontakt, termin, rande, sprava, ua, film) VALUES (?, ?, ?, ?, ?, ?, ?)')
+      .bind(meno, kontakt, termin, rande, sprava, ua, film)
       .run();
   }
-  const n = await pocet(env);
-  return json({ ok: true, pocet: n, volne: volne(n), spolu: SLOTS });
+  return json({ ok: true });
 }
 
 async function olymp(url, env) {
@@ -112,17 +111,17 @@ async function olymp(url, env) {
       headers: hdr,
     });
   }
-  const { results } = await env.DB.prepare('SELECT id, created_at, meno, kontakt, termin, rande, sprava FROM prihlasky ORDER BY id DESC').all();
+  const { results } = await env.DB.prepare('SELECT id, created_at, meno, kontakt, film, termin, rande, sprava FROM prihlasky ORDER BY id DESC').all();
   const rows = (results || [])
     .map(
       (r) =>
-        `<tr><td>${esc(r.id)}</td><td>${esc(r.created_at)}</td><td>${esc(r.meno)}</td><td>${esc(r.kontakt)}</td><td>${esc(r.termin)}</td><td>${esc(r.rande)}</td><td>${esc(r.sprava)}</td></tr>`
+        `<tr><td>${esc(r.id)}</td><td>${esc(r.created_at)}</td><td>${esc(r.meno)}</td><td>${esc(r.kontakt)}</td><td>${esc(r.film)}</td><td>${esc(r.termin)}</td><td>${esc(r.rande)}</td><td>${esc(r.sprava)}</td></tr>`
     )
     .join('');
   const html = `<!doctype html><html lang="sk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Olymp</title>
 <style>body{font:15px/1.5 system-ui,sans-serif;background:#F6EFE6;color:#2a1217;margin:0;padding:24px}h1{font-family:Georgia,serif;font-style:italic;color:#740B1D;margin:0 0 4px}p{margin:0 0 16px}.w{overflow-x:auto}table{border-collapse:collapse;min-width:100%;background:#fff}th,td{border:1px solid #E8D3B5;padding:8px 10px;text-align:left;vertical-align:top}th{background:#740B1D;color:#F6EFE6;white-space:nowrap}</style></head>
 <body><h1>Olymp</h1><p>Prihlášky: <b>${(results || []).length}</b>. Len pre Dominika. Po akcii sa všetko maže.</p>
-<div class="w"><table><thead><tr><th>#</th><th>Kedy (UTC)</th><th>Meno</th><th>Kontakt</th><th>Termín</th><th>Kam na rande</th><th>Odkaz</th></tr></thead><tbody>${rows || '<tr><td colspan="7">Zatiaľ nikto. Herkules trpezlivo čaká.</td></tr>'}</tbody></table></div></body></html>`;
+<div class="w"><table><thead><tr><th>#</th><th>Kedy (UTC)</th><th>Meno</th><th>Kontakt</th><th>Obľúbený film</th><th>Termín</th><th>Kam na rande</th><th>Odkaz</th></tr></thead><tbody>${rows || '<tr><td colspan="8">Zatiaľ nikto. Herkules trpezlivo čaká.</td></tr>'}</tbody></table></div></body></html>`;
   return new Response(html, { headers: hdr });
 }
 
@@ -137,7 +136,6 @@ export default {
     }
 
     try {
-      if (url.pathname === '/api/stav' && request.method === 'GET') return withHeaders(await stav(env));
       if (url.pathname === '/api/prihlaska') {
         if (request.method !== 'POST') return withHeaders(json({ ok: false, chyba: 'Len POST.' }, 405), { allow: 'POST' });
         return withHeaders(await prihlaska(request, env));

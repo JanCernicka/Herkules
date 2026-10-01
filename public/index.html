@@ -20,6 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,500;1,9..144,700;1,9..144,800&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+<script>document.documentElement.className="js"</script>
 <style>
 :root{
   --bordo:#740B1D; --bordo-tm:#560815;
@@ -58,10 +59,6 @@ h1,h2,h3{font-family:var(--serif);font-style:italic;font-weight:700;line-height:
 .stat b{display:block;font:italic 800 clamp(26px,7vw,40px)/1 var(--serif);color:var(--lime)}
 .stat span{display:block;font-size:13px;margin-top:6px;color:#f3e3d8}
 .cta-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
-.bubble-wrap{position:relative;display:inline-block}
-.bubble{position:absolute;left:50%;bottom:calc(100% + 12px);transform:translate(-50%,8px) scale(.9);background:var(--krem);color:var(--bordo);font:italic 800 28px/1 var(--serif);padding:12px 22px;border-radius:22px;opacity:0;pointer-events:none;transition:all .25s;white-space:nowrap}
-.bubble::after{content:"";position:absolute;left:50%;top:100%;transform:translateX(-50%);border:9px solid transparent;border-top-color:var(--krem)}
-.bubble.on{opacity:1;transform:translate(-50%,0) scale(1)}
 .hero-photo{border-radius:28px;overflow:hidden;aspect-ratio:4/5;max-width:420px;border:3px solid rgba(246,239,230,.2)}
 
 /* placeholdery fotiek */
@@ -93,17 +90,26 @@ section{padding:72px 0}
 .flag li::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:10px;background:var(--modra)}
 .flag.red li::before{background:var(--bordo)}
 
-/* ULOHY */
+/* ULOHY: ilustrovane scenky */
 .ulohy{background:var(--navy);color:var(--krem)}
 .ulohy .sec-lead{color:#c9d6ee}
 .ulohy .kicker{color:var(--lime);margin-bottom:12px}
-.tasks{list-style:none;display:grid;gap:0;max-width:760px}
-.tasks li{display:grid;grid-template-columns:62px 1fr;gap:14px;align-items:baseline;padding:15px 0;border-bottom:1px solid rgba(246,239,230,.16)}
-.tasks .rim{font:italic 800 24px/1 var(--serif);color:var(--lime)}
-.tasks .t{font-size:17px}
-.tasks .t b{font-weight:800}
-.tasks .t span{color:#c9d6ee}
-.xiii{margin-top:30px;max-width:760px}
+.scenes{list-style:none;display:grid;gap:clamp(30px,7vw,70px);margin:42px auto 0;max-width:880px}
+.scene{display:grid;grid-template-columns:clamp(112px,31vw,150px) 1fr;gap:clamp(16px,4vw,28px);align-items:center}
+.ill{width:100%;aspect-ratio:1}
+.ill svg{width:100%;height:100%;display:block;overflow:visible}
+.ilu .tx{font:italic 800 20px var(--serif)}
+.scene .rim{display:block;font:italic 800 clamp(24px,6vw,30px)/1 var(--serif);color:var(--lime);margin-bottom:6px}
+.scene h3{font-size:clamp(24px,5.6vw,36px);color:var(--krem);margin-bottom:8px}
+.scene p{color:#c9d6ee;font-size:clamp(16px,3.8vw,19px)}
+/* dokreslovanie pri scrollovani (len ked bezi JS) */
+.js .scene:not(.in) .ill svg .dr{stroke-dasharray:1 2;stroke-dashoffset:1.02}
+.js .scene.in .ill svg .dr{stroke-dasharray:1 2;stroke-dashoffset:0;transition:stroke-dashoffset 1.5s cubic-bezier(.4,0,.2,1)}
+.js .scene:not(.in) .ill svg .ac,.js .scene:not(.in) .ill svg .tx{opacity:0}
+.js .scene.in .ill svg .ac,.js .scene.in .ill svg .tx{opacity:1;transition:opacity .6s ease 1s}
+.js .scene:not(.in) .txt{opacity:0;transform:translateY(18px)}
+.js .scene.in .txt{opacity:1;transform:none;transition:opacity .7s ease .25s,transform .7s ease .25s}
+.xiii{margin:clamp(34px,7vw,64px) auto 0;max-width:880px}
 .xiii button{width:100%;text-align:left;cursor:pointer;display:grid;grid-template-columns:62px 1fr auto;gap:14px;align-items:center;font:inherit;color:var(--bordo-tm);background:var(--lime);border:0;border-radius:22px;padding:20px 22px;transition:transform .15s,box-shadow .15s}
 .xiii button:hover{transform:translateY(-2px);box-shadow:0 8px 0 rgba(0,0,0,.25)}
 .xiii .rim{font:italic 800 28px/1 var(--serif)}
@@ -111,14 +117,15 @@ section{padding:72px 0}
 .xiii .q small{display:block;font-weight:500;font-size:14px;opacity:.8}
 .xiii .arrow{font-size:26px;font-weight:800}
 .xiii.open button{background:var(--krem)}
-.xiii .reveal{display:none;margin-top:14px;font:italic 800 clamp(32px,8vw,56px)/1.05 var(--serif);color:var(--lime)}
-.xiii.open .reveal{display:block;animation:pop .5s ease both}
-@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.96)}to{opacity:1;transform:none}}
+.xiii .reveal{display:none;margin-top:26px}
+.xiii.open .reveal{display:grid}
+.xiii .reveal h3{font-size:clamp(34px,8.5vw,58px);color:var(--lime)}
+.xiii .reveal p{color:#c9d6ee}
 
 /* PRIHLASKA */
-.form-sec{background:var(--krem)}
-.slots{display:inline-flex;align-items:center;gap:10px;background:var(--bordo);color:var(--krem);border-radius:999px;padding:9px 18px;font-weight:800;font-size:15px;margin-bottom:22px}
-.slots b{color:var(--lime);font-family:var(--serif);font-style:italic;font-size:20px}
+.form-sec{background:var(--piesok)}
+.only{display:inline-block;background:var(--bordo);color:var(--krem);border-radius:999px;padding:10px 20px;font:italic 700 clamp(17px,4.4vw,20px)/1.2 var(--serif);margin-bottom:22px}
+.only b{color:var(--lime);font-weight:800}
 form{background:#fff;border-radius:28px;padding:26px 22px 28px;max-width:640px;box-shadow:0 2px 0 rgba(116,11,29,.1);display:grid;gap:20px}
 label.l,.l-t{display:block;font-weight:800;font-size:15px;margin-bottom:7px}
 .opt{font-weight:500;color:var(--text-sv)}
@@ -148,6 +155,10 @@ footer small{display:block;opacity:.7;margin-top:18px}
 
 @media (min-width:720px){
   body{font-size:18px}
+  .scene{grid-template-columns:230px 1fr;gap:56px}
+  .scene:nth-child(even){grid-template-columns:1fr 230px}
+  .scene:nth-child(even) .ill{order:2}
+  .scene:nth-child(even) .txt{text-align:right}
   section{padding:96px 0}
   .hero{padding:84px 0 92px}
   .hero-grid{grid-template-columns:1.25fr .75fr;align-items:center}
@@ -156,7 +167,7 @@ footer small{display:block;opacity:.7;margin-top:18px}
   .facts,.flags{grid-template-columns:1fr 1fr}
   form{padding:36px 36px 38px}
 }
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}.js .scene:not(.in) .ill svg .dr{stroke-dasharray:none;stroke-dashoffset:0}.js .scene:not(.in) .ill svg .ac,.js .scene:not(.in) .ill svg .tx,.js .scene:not(.in) .txt{opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -173,13 +184,9 @@ footer small{display:block;opacity:.7;margin-top:18px}
         <div class="stat"><b>1</b><span>slovo: ÁNO</span></div>
       </div>
       <div class="cta-row">
-        <span class="bubble-wrap">
-          <span class="bubble" id="bublina" aria-hidden="true">ÁNO.</span>
-          <button class="btn btn-lime" id="anoBtn" type="button">Prehrať jeho ÁNO</button>
-        </span>
-        <a class="btn btn-line" href="#prihlaska">Prihlásiť sa na rande</a>
+        <a class="btn btn-lime" href="#prihlaska">Prihlásiť sa na rande</a>
+        <a class="btn btn-line" href="#ulohy">Jeho 12 úloh</a>
       </div>
-      <audio id="anoAudio" preload="none"><!-- TODO: po dodaní nahrávky nastav src="/ano.mp3" (skript ju skúsi nájsť aj sám) --></audio>
     </div>
     <div class="hero-photo">
       <!-- TODO: fotka hero. Vlož <img src="/img/hero.jpg" alt="Dominik, prezývka Herkules" width="840" height="1050"> namiesto .ph -->
@@ -189,6 +196,41 @@ footer small{display:block;opacity:.7;margin-top:18px}
 </header>
 
 <main>
+<section class="ulohy" id="ulohy">
+  <div class="wrap">
+    <p class="kicker">Mýtus</p>
+    <h2 class="sec-h">12 úloh, ktoré už splnil</h2>
+    <p class="sec-lead">Pôvodný Herkules mal 12 vypätých prác. Tento si poradil s týmito. Scrolluj dole.</p>
+    <!-- TODO: zoznam je návrh, uprav podľa potreby. Ilustrácie sú inline SVG v každej scénke. -->
+    <ol class="scenes">
+      <li class="scene"><div class="ill"><svg class="ilu" viewBox="0 0 200 200" role="img" aria-label="Nemejský lev a činka" fill="none" stroke="#F6EFE6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="100" r="94" fill="#10397a" stroke="#C0CB4A" stroke-width="3"/><circle cx="146.0" cy="82.0" r="14" fill="#10397a"/><circle cx="139.8" cy="105.0" r="14" fill="#10397a"/><circle cx="123.0" cy="121.8" r="14" fill="#10397a"/><circle cx="100.0" cy="128.0" r="14" fill="#10397a"/><circle cx="77.0" cy="121.8" r="14" fill="#10397a"/><circle cx="60.2" cy="105.0" r="14" fill="#10397a"/><circle cx="54.0" cy="82.0" r="14" fill="#10397a"/><circle cx="60.2" cy="59.0" r="14" fill="#10397a"/><circle cx="77.0" cy="42.2" r="14" fill="#10397a"/><circle cx="100.0" cy="36.0" r="14" fill="#10397a"/><circle cx="123.0" cy="42.2" r="14" fill="#10397a"/><circle cx="139.8" cy="59.0" r="14" fill="#10397a"/><circle cx="100" cy="82" r="41" fill="#10397a"/><path d="M72 54 Q80 46 90 52 M128 54 Q120 46 110 52" /><circle class="ac" cx="88" cy="76" r="3.5" style="fill:#F6EFE6"/><circle class="ac" cx="112" cy="76" r="3.5" style="fill:#F6EFE6"/><path class="ac" d="M92 88 L108 88 L100 98 Z"/><path d="M100 98 V105 M89 108 Q100 116 100 105 Q100 116 111 108"/><path d="M71.0 162 H129.0"/><rect class="pl" x="65.0" y="150.0" width="10" height="24" rx="3" fill="#C0CB4A"/><rect class="pl" x="125.0" y="150.0" width="10" height="24" rx="3" fill="#C0CB4A"/></svg></div><div class="txt"><span class="rim">I.</span><h3>Nemejský lev</h3><p>Fitko dobyté. Rep po repe, týždeň po týždni.</p></div></li>
+      <li class="scene"><div class="ill"><svg class="ilu" viewBox="0 0 200 200" role="img" aria-label="Lernajská hydra" fill="none" stroke="#F6EFE6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="100" r="94" fill="#10397a" stroke="#C0CB4A" stroke-width="3"/><path d="M48 170 q8 -8 16 0 t16 0 t16 0 t16 0 t16 0 t16 0" stroke="#C0CB4A"/><ellipse cx="100" cy="150" rx="42" ry="17" fill="#10397a"/><path d="M80 146 C66 118 46 108 52 80" stroke-width="7"/><path d="M100 135 C100 106 112 88 100 60" stroke-width="7"/><path d="M120 146 C134 118 154 108 148 80" stroke-width="7"/><ellipse cx="54" cy="66" rx="16" ry="10" fill="#10397a"/><circle class="ac" cx="50" cy="64" r="3" style="fill:#C0CB4A"/><ellipse cx="100" cy="46" rx="16" ry="10" fill="#10397a"/><circle class="ac" cx="96" cy="44" r="3" style="fill:#C0CB4A"/><ellipse cx="146" cy="66" rx="16" ry="10" fill="#10397a"/><circle class="ac" cx="150" cy="64" r="3" style="fill:#C0CB4A"/><path d="M40 68 l-10 -2 m10 2 l-9 6" stroke="#C0CB4A" stroke-width="3"/><path d="M160 68 l10 -2 m-10 2 l9 6" stroke="#C0CB4A" stroke-width="3"/><path d="M100 35 v-9 m0 9 l-6 -7 m6 7 l6 -7" stroke="#C0CB4A" stroke-width="3"/><path class="ac" d="M36 53 L37.75 58.25 L43 60 L37.75 61.75 L36 67 L34.25 61.75 L29 60 L34.25 58.25 Z"/><path class="ac" d="M166 45 L167.75 50.25 L173 52 L167.75 53.75 L166 59 L164.25 53.75 L159 52 L164.25 50.25 Z"/></svg></div><div class="txt"><span class="rim">II.</span><h3>Lernajská hydra</h3><p>Zachoval pokoj ako Marcus Aurelius, aj keď narástli dve hlavy namiesto jednej.</p></div></li>
+      <li class="scene"><div class="ill"><svg class="ilu" viewBox="0 0 200 200" role="img" aria-label="Kerynejská laň a filmová klapka" fill="none" stroke="#F6EFE6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="100" r="94" fill="#10397a" stroke="#C0CB4A" stroke-width="3"/><path d="M84 66 C76 50 70 38 72 20 M77 48 L60 40 M73 34 L58 24 M75 28 L82 14" stroke="#C0CB4A"/><path d="M116 66 C124 50 130 38 128 20 M123 48 L140 40 M127 34 L142 24 M125 28 L118 14" stroke="#C0CB4A"/><ellipse cx="64" cy="82" rx="14" ry="7" transform="rotate(-25 64 82)" fill="#10397a"/><ellipse cx="136" cy="82" rx="14" ry="7" transform="rotate(25 136 82)" fill="#10397a"/><path d="M72 80 Q72 64 100 64 Q128 64 128 80 L118 126 Q100 144 82 126 Z" fill="#10397a"/><circle class="ac" cx="88" cy="90" r="3.5" style="fill:#F6EFE6"/><circle class="ac" cx="112" cy="90" r="3.5" style="fill:#F6EFE6"/><ellipse class="ac" cx="100" cy="128" rx="8" ry="5" style="fill:#F6EFE6"/><rect x="112" y="146" width="48" height="26" rx="4" fill="#10397a"/><path d="M112 146 L160 146 L160 136 L112 136 Z" fill="#C0CB4A" stroke="#F6EFE6"/><path d="M122 146 L128 136 M134 146 L140 136 M146 146 L152 136" stroke="#740B1D" stroke-width="3"/></svg></div><div class="txt"><span class="rim">III.</span><h3>Kerynejská laň</h3><p>Dohonil film, ktorý videli všetci okrem neho.</p></div></li>
+      <li class="scene"><div class="ill"><svg class="ilu" viewBox="0 0 200 200" role="img" aria-label="Erymantský kanec v kuchárskej čiapke" fill="none" stroke="#F6EFE6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="100" r="94" fill="#10397a" stroke="#C0CB4A" stroke-width="3"/><circle cx="80" cy="46" r="18" fill="#10397a"/><circle cx="100" cy="38" r="18" fill="#10397a"/><circle cx="120" cy="46" r="18" fill="#10397a"/><rect x="78" y="58" width="44" height="18" rx="3" fill="#10397a"/><path d="M64 88 L50 76 L60 102 M136 88 L150 76 L140 102" fill="#10397a"/><path d="M64 92 Q64 78 80 76 L120 76 Q136 78 136 92 L132 118 Q128 142 100 144 Q72 142 68 118 Z" fill="#10397a"/><ellipse cx="100" cy="122" rx="20" ry="14" fill="#C0CB4A" stroke="#F6EFE6"/><circle class="ac" cx="93" cy="122" r="3" style="fill:#740B1D"/><circle class="ac" cx="107" cy="122" r="3" style="fill:#740B1D"/><circle class="ac" cx="84" cy="98" r="3.5" style="fill:#F6EFE6"/><circle class="ac" cx="116" cy="98" r="3.5" style="fill:#F6EFE6"/><path d="M82 128 Q70 126 72 110 M118 128 Q130 126 128 110" stroke="#F6EFE6"/><path d="M78 70 L122 70" stroke="#C0CB4A" stroke-width="3"/></svg></div><div class="txt"><span class="rim">IV.</span><h3>Erymantský kanec</h3><p>Uvaril večeru, po ktorej sa kamoši vracajú.</p></div></li>
+      <li class="scene"><div class="ill"><svg class="ilu" viewBox="0 0 200 200" role="img" aria-label="Metla a vytlačená kocka z 3D tlačiarne" fill="none" stroke="#F6EFE6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="100" r="94" fill="#10397a" stroke="#C0CB4A" stroke-width="3"/><path d="M84 90 L112 104 L84 118 L56 104 Z" fill="#C0CB4A"/><path d="M56 104 L84 118 L84 152 L56 138 Z" fill="#10397a"/><path d="M84 118 L112 104 L112 138 L84 152 Z" fill="#10397a"/><path d="M56 116 L84 130 L112 116 M56 128 L84 142 L112 128" stroke-width="2.5"/><path d="M158 34 L134 112"/><path d="M122 106 L146 114 L160 152 L122 150 Z" fill="#10397a"/><path d="M132 120 L132 148 M141 122 L144 148 M150 130 L152 148" stroke-width="2.5"/><path class="ac" d="M46 66 L48.0 72.0 L54 74 L48.0 76.0 L46 82 L44.0 76.0 L38 74 L44.0 72.0 Z"/><path class="ac" d="M166 85 L167.75 90.25 L173 92 L167.75 93.75 L166 99 L164.25 93.75 L159 92 L164.25 90.25 Z"/><path class="ac" d="M120 60 L121.5 64.5 L126 66 L121.5 67.5 L120 72 L118.5 67.5 L114 66 L118.5 64.5 Z"/></svg></div><div class="txt"><span class="rim">V.</span><h3>Augiášove chlievy</h3><p>Vyčistil dielňu po 3D tlači. Za jeden deň.</p></div></li>
+      <li class="scene"><div class="ill"><svg class="ilu" viewBox="0 0 200 200" role="img" aria-label="Stymfalský vták zasiahnutý šípom" fill="none" stroke="#F6EFE6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="100" r="94" fill="#10397a" stroke="#C0CB4A" stroke-width="3"/><path d="M34 158 L170 66" stroke="#C0CB4A"/><path class="ac" d="M178 60 L160 62 L170 76 Z"/><path d="M34 158 L28 146 M34 158 L24 160 M44 152 L38 140 M44 152 L34 154" stroke="#C0CB4A" stroke-width="3"/><path d="M92 108 Q72 50 112 42 Q108 78 126 108 Z" fill="#10397a"/><ellipse cx="100" cy="116" rx="34" ry="16" fill="#10397a"/><circle cx="138" cy="102" r="11" fill="#10397a"/><path class="ac" d="M147 98 L164 104 L147 108 Z" style="fill:#C0CB4A"/><circle class="ac" cx="140" cy="99" r="2.8" style="fill:#F6EFE6"/><path d="M70 120 L44 134 L46 112 Z" fill="#10397a"/><path d="M34 158 L170 66" stroke="#C0CB4A"/></svg></div><div class="txt"><span class="rim">VI.</span><h3>Stymfalské vtáky</h3><p>Zostrelil všetky zlé nápady v návrhu grafiky.</p></div></li>
+      <li class="scene"><div class="ill"><svg class="ilu" viewBox="0 0 200 200" role="img" aria-label="Krétsky býk s činkou" fill="none" stroke="#F6EFE6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="100" r="94" fill="#10397a" stroke="#C0CB4A" stroke-width="3"/><path d="M78 82 Q50 86 44 54 M122 82 Q150 86 156 54" stroke-width="6"/><path d="M78 74 Q100 64 122 74 L120 112 Q118 138 100 142 Q82 138 80 112 Z" fill="#10397a"/><path d="M80 92 L60 94 L74 106 Z M120 92 L140 94 L126 106 Z" fill="#10397a"/><circle class="ac" cx="89" cy="96" r="3.5" style="fill:#F6EFE6"/><circle class="ac" cx="111" cy="96" r="3.5" style="fill:#F6EFE6"/><ellipse cx="100" cy="124" rx="17" ry="11" fill="#10397a"/><circle class="ac" cx="94" cy="124" r="2.8" style="fill:#F6EFE6"/><circle class="ac" cx="106" cy="124" r="2.8" style="fill:#F6EFE6"/><circle cx="100" cy="138" r="7" stroke="#C0CB4A"/><path d="M68.0 168 H132.0"/><rect class="pl" x="62.0" y="157.0" width="10" height="22" rx="3" fill="#C0CB4A"/><rect class="pl" x="128.0" y="157.0" width="10" height="22" rx="3" fill="#C0CB4A"/></svg></div><div class="txt"><span class="rim">VII.</span><h3>Krétsky býk</h3><p>Prekonal vlastný osobák v posilke.</p></div></li>
+      <li class="scene"><div class="ill"><svg class="ilu" viewBox="0 0 200 200" role="img" aria-label="Diomédov kôň odpovedá ÁNO" fill="none" stroke="#F6EFE6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="100" r="94" fill="#10397a" stroke="#C0CB4A" stroke-width="3"/><path d="M122 52 L126 26 L108 44 C96 56 80 86 66 110 C58 122 56 134 66 140 C76 146 86 140 90 134 C96 128 100 122 108 120 C124 142 128 160 126 176 L152 176 C154 130 152 80 140 54 Z" fill="#10397a"/><path d="M140 56 C150 72 146 90 144 108 M146 90 C158 104 152 124 150 140 M144 70 C156 76 156 94 152 106" stroke="#C0CB4A" stroke-width="3.5"/><circle class="ac" cx="100" cy="80" r="3.5" style="fill:#F6EFE6"/><circle class="ac" cx="66" cy="128" r="3" style="fill:#F6EFE6"/><rect x="22" y="30" width="62" height="34" rx="14" fill="#C0CB4A" stroke="#C0CB4A"/><path d="M70 64 L82 76 L84 60" fill="#C0CB4A" stroke="#C0CB4A"/><text x="53" y="53" text-anchor="middle" class="tx" style="fill:#740B1D;stroke:none">ÁNO</text></svg></div><div class="txt"><span class="rim">VIII.</span><h3>Diomédove kone</h3><p>Povedal ÁNO sidequestu bez toho, aby vedel, kam to vedie.</p></div></li>
+      <li class="scene"><div class="ill"><svg class="ilu" viewBox="0 0 200 200" role="img" aria-label="Hippolytin opasok" fill="none" stroke="#F6EFE6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="100" r="94" fill="#10397a" stroke="#C0CB4A" stroke-width="3"/><path d="M24 84 Q100 64 176 84 L176 118 Q100 98 24 118 Z" fill="#10397a"/><circle class="ac" cx="40" cy="97" r="3.5" style="fill:#C0CB4A"/><circle class="ac" cx="62" cy="94" r="3.5" style="fill:#C0CB4A"/><circle class="ac" cx="138" cy="94" r="3.5" style="fill:#C0CB4A"/><circle class="ac" cx="160" cy="97" r="3.5" style="fill:#C0CB4A"/><rect x="76" y="80" width="48" height="48" rx="8" fill="#C0CB4A"/><circle cx="100" cy="104" r="11" stroke="#740B1D"/><path d="M100 86 V92 M100 116 V122 M82 104 H88 M112 104 H118" stroke="#740B1D" stroke-width="3"/><path class="ac" d="M44 142 L46.0 148.0 L52 150 L46.0 152.0 L44 158 L42.0 152.0 L36 150 L42.0 148.0 Z"/><path class="ac" d="M158 142 L160.0 148.0 L166 150 L160.0 152.0 L158 158 L156.0 152.0 L150 150 L156.0 148.0 Z"/><path d="M80 152 Q100 164 120 152" /></svg></div><div class="txt"><span class="rim">IX.</span><h3>Opasok Hippolyty</h3><p>Dodržal slovo kamarátovi, aj keď to stálo celý víkend.</p></div></li>
+      <li class="scene"><div class="ill"><svg class="ilu" viewBox="0 0 200 200" role="img" aria-label="Gerýon: tri veci naraz, fitko, grafika a film" fill="none" stroke="#F6EFE6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="100" r="94" fill="#10397a" stroke="#C0CB4A" stroke-width="3"/><path d="M28 160 Q28 122 100 118 Q172 122 172 160 Z" fill="#10397a"/><path d="M34 146 H166" stroke="#C0CB4A"/><circle cx="54" cy="84" r="24" fill="#10397a"/><path d="M54 108 V118"/><circle cx="100" cy="64" r="24" fill="#10397a"/><path d="M100 88 V98"/><circle cx="146" cy="84" r="24" fill="#10397a"/><path d="M146 108 V118"/><path d="M43.0 84 H65.0"/><rect class="pl" x="37.0" y="78.0" width="6" height="12" rx="3" fill="#C0CB4A"/><rect class="pl" x="61.0" y="78.0" width="6" height="12" rx="3" fill="#C0CB4A"/><path d="M92 74 L108 58 L112 62 L96 78 Z M92 74 L90 80 L96 78" fill="#C0CB4A"/><rect x="136" y="78" width="20" height="14" rx="2" fill="#10397a"/><path d="M136 78 L156 78 L156 72 L136 72 Z" fill="#C0CB4A"/></svg></div><div class="txt"><span class="rim">X.</span><h3>Gerýonove stáda</h3><p>Zvládol fitko, grafiku aj film v jeden deň.</p></div></li>
+      <li class="scene"><div class="ill"><svg class="ilu" viewBox="0 0 200 200" role="img" aria-label="Atlas drží nebo" fill="none" stroke="#F6EFE6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="100" r="94" fill="#10397a" stroke="#C0CB4A" stroke-width="3"/><circle cx="100" cy="62" r="36" fill="#10397a"/><ellipse cx="100" cy="62" rx="15" ry="36"/><path d="M64 62 H136 M70 44 Q100 54 130 44 M70 80 Q100 70 130 80"/><circle cx="100" cy="124" r="12" fill="#10397a"/><path d="M66 172 Q66 140 100 138 Q134 140 134 172 Z" fill="#10397a"/><path d="M76 146 Q58 122 70 96 M124 146 Q142 122 130 96" stroke-width="6"/><path class="ac" d="M36 49 L37.75 54.25 L43 56 L37.75 57.75 L36 63 L34.25 57.75 L29 56 L34.25 54.25 Z"/><path class="ac" d="M166 43 L167.75 48.25 L173 50 L167.75 51.75 L166 57 L164.25 51.75 L159 50 L164.25 48.25 Z"/><path class="ac" d="M160 134 L161.5 138.5 L166 140 L161.5 141.5 L160 146 L158.5 141.5 L154 140 L158.5 138.5 Z"/></svg></div><div class="txt"><span class="rim">XI.</span><h3>Zlaté jablká Hesperidiek</h3><p>Podržal nebo kamošovi. Ako Herkules Atlasovi.</p></div></li>
+      <li class="scene"><div class="ill"><svg class="ilu" viewBox="0 0 200 200" role="img" aria-label="Cerberus, trojhlavý pes" fill="none" stroke="#F6EFE6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="100" r="94" fill="#10397a" stroke="#C0CB4A" stroke-width="3"/><g transform="translate(46 118) scale(0.8) rotate(-14)"><path d="M-24 -22 L-34 -52 L-10 -36 M24 -22 L34 -52 L10 -36" fill="#10397a"/><path d="M-24 -16 Q-24 -34 0 -34 Q24 -34 24 -16 L20 18 Q0 36 -20 18 Z" fill="#10397a"/><circle class="ac" cx="-10" cy="-8" r="3.5" style="fill:#F6EFE6"/><circle class="ac" cx="10" cy="-8" r="3.5" style="fill:#F6EFE6"/><path class="ac" d="M-6 6 L6 6 L0 13 Z" style="fill:#C0CB4A"/><path d="M0 13 V20 M-9 22 Q0 28 0 20 Q0 28 9 22"/></g><g transform="translate(154 118) scale(0.8) rotate(14)"><path d="M-24 -22 L-34 -52 L-10 -36 M24 -22 L34 -52 L10 -36" fill="#10397a"/><path d="M-24 -16 Q-24 -34 0 -34 Q24 -34 24 -16 L20 18 Q0 36 -20 18 Z" fill="#10397a"/><circle class="ac" cx="-10" cy="-8" r="3.5" style="fill:#F6EFE6"/><circle class="ac" cx="10" cy="-8" r="3.5" style="fill:#F6EFE6"/><path class="ac" d="M-6 6 L6 6 L0 13 Z" style="fill:#C0CB4A"/><path d="M0 13 V20 M-9 22 Q0 28 0 20 Q0 28 9 22"/></g><g transform="translate(100 104) scale(1.05) rotate(0)"><path d="M-24 -22 L-34 -52 L-10 -36 M24 -22 L34 -52 L10 -36" fill="#10397a"/><path d="M-24 -16 Q-24 -34 0 -34 Q24 -34 24 -16 L20 18 Q0 36 -20 18 Z" fill="#10397a"/><circle class="ac" cx="-10" cy="-8" r="3.5" style="fill:#F6EFE6"/><circle class="ac" cx="10" cy="-8" r="3.5" style="fill:#F6EFE6"/><path class="ac" d="M-6 6 L6 6 L0 13 Z" style="fill:#C0CB4A"/><path d="M0 13 V20 M-9 22 Q0 28 0 20 Q0 28 9 22"/></g><path d="M62 168 H138" stroke="#C0CB4A"/><path class="ac" d="M36 53 L37.75 58.25 L43 60 L37.75 61.75 L36 67 L34.25 61.75 L29 60 L34.25 58.25 Z"/><path class="ac" d="M166 53 L167.75 58.25 L173 60 L167.75 61.75 L166 67 L164.25 61.75 L159 60 L164.25 58.25 Z"/></svg></div><div class="txt"><span class="rim">XII.</span><h3>Cerberus</h3><p>Zišiel do podsvetia za kamošom a vrátil sa aj s ním.</p></div></li>
+    </ol>
+
+    <div class="xiii" id="xiii">
+      <button type="button" id="xiiiBtn" aria-expanded="false" aria-controls="xiiiRev">
+        <span class="rim">XIII.</span>
+        <span class="q">Posledná úloha<small>Klikni a zisti, čo ostáva</small></span>
+        <span class="arrow" aria-hidden="true">?</span>
+      </button>
+      <div class="reveal scene" id="xiiiRev" aria-live="polite">
+        <div class="ill"><svg class="ilu" viewBox="0 0 200 200" role="img" aria-label="Slniečko" fill="none" stroke="#F6EFE6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><circle cx="100" cy="100" r="94" fill="#10397a" stroke="#C0CB4A" stroke-width="3"/><path d="M146.0 100.0 L164.0 100.0" stroke="#C0CB4A"/><path d="M139.8 123.0 L155.4 132.0" stroke="#C0CB4A"/><path d="M123.0 139.8 L132.0 155.4" stroke="#C0CB4A"/><path d="M100.0 146.0 L100.0 164.0" stroke="#C0CB4A"/><path d="M77.0 139.8 L68.0 155.4" stroke="#C0CB4A"/><path d="M60.2 123.0 L44.6 132.0" stroke="#C0CB4A"/><path d="M54.0 100.0 L36.0 100.0" stroke="#C0CB4A"/><path d="M60.2 77.0 L44.6 68.0" stroke="#C0CB4A"/><path d="M77.0 60.2 L68.0 44.6" stroke="#C0CB4A"/><path d="M100.0 54.0 L100.0 36.0" stroke="#C0CB4A"/><path d="M123.0 60.2 L132.0 44.6" stroke="#C0CB4A"/><path d="M139.8 77.0 L155.4 68.0" stroke="#C0CB4A"/><circle class="ac" cx="100" cy="100" r="34" style="fill:#C0CB4A"/><circle class="ac" cx="88" cy="94" r="4" style="fill:#740B1D"/><circle class="ac" cx="112" cy="94" r="4" style="fill:#740B1D"/><path d="M84 108 Q100 124 116 108" stroke="#740B1D"/></svg></div>
+        <div class="txt"><span class="rim">XIII.</span><h3>Nájsť slniečko ☀</h3><p>A práve tu prichádzaš na rad ty.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="zvysok">
   <div class="wrap">
     <p class="kicker" style="color:var(--bordo);margin-bottom:12px">Pitch pokračuje</p>
@@ -247,45 +289,12 @@ footer small{display:block;opacity:.7;margin-top:18px}
   </div>
 </section>
 
-<section class="ulohy" id="ulohy">
-  <div class="wrap">
-    <p class="kicker">Mýtus</p>
-    <h2 class="sec-h">12 úloh, ktoré už splnil</h2>
-    <p class="sec-lead">Pôvodný Herkules mal 12 vypätých prác. Tento si poradil s týmito.</p>
-    <!-- TODO: zoznam je návrh, uprav podľa potreby -->
-    <ol class="tasks" style="list-style:none">
-      <li><span class="rim">I.</span><span class="t"><b>Nemejský lev.</b> <span>Fitko dobyté. Rep po repe, týždeň po týždni.</span></span></li>
-      <li><span class="rim">II.</span><span class="t"><b>Lernajská hydra.</b> <span>Zachoval pokoj ako Marcus Aurelius, aj keď narástli dve hlavy namiesto jednej.</span></span></li>
-      <li><span class="rim">III.</span><span class="t"><b>Kerynejská laň.</b> <span>Dohonil film, ktorý videli všetci okrem neho.</span></span></li>
-      <li><span class="rim">IV.</span><span class="t"><b>Erymantský kanec.</b> <span>Uvaril večeru, po ktorej sa kamoši vracajú.</span></span></li>
-      <li><span class="rim">V.</span><span class="t"><b>Augiášove chlievy.</b> <span>Vyčistil dielňu po 3D tlači. Za jeden deň.</span></span></li>
-      <li><span class="rim">VI.</span><span class="t"><b>Stymfalské vtáky.</b> <span>Zostrelil všetky zlé nápady v návrhu grafiky.</span></span></li>
-      <li><span class="rim">VII.</span><span class="t"><b>Krétsky býk.</b> <span>Prekonal vlastný osobák v posilke.</span></span></li>
-      <li><span class="rim">VIII.</span><span class="t"><b>Diomédove kone.</b> <span>Povedal ÁNO sidequestu bez toho, aby vedel, kam to vedie.</span></span></li>
-      <li><span class="rim">IX.</span><span class="t"><b>Opasok Hippolyty.</b> <span>Dodržal slovo kamarátovi, aj keď to stálo celý víkend.</span></span></li>
-      <li><span class="rim">X.</span><span class="t"><b>Gerýonove stáda.</b> <span>Zvládol fitko, grafiku aj film v jeden deň.</span></span></li>
-      <li><span class="rim">XI.</span><span class="t"><b>Zlaté jablká Hesperidiek.</b> <span>Podržal nebo kamošovi. Ako Herkules Atlasovi.</span></span></li>
-      <li><span class="rim">XII.</span><span class="t"><b>Cerberus.</b> <span>Zišiel do podsvetia za kamošom a vrátil sa aj s ním.</span></span></li>
-    </ol>
-
-    <div class="xiii" id="xiii">
-      <button type="button" id="xiiiBtn" aria-expanded="false" aria-controls="xiiiRev">
-        <span class="rim">XIII.</span>
-        <span class="q">Posledná úloha<small>Klikni a zisti, čo ostáva</small></span>
-        <span class="arrow" aria-hidden="true">?</span>
-      </button>
-      <p class="reveal" id="xiiiRev" aria-live="polite">Nájsť slniečko ☀</p>
-    </div>
-  </div>
-</section>
-
 <section class="form-sec" id="prihlaska">
   <div class="wrap">
     <p class="kicker" style="color:var(--bordo);margin-bottom:12px">Pôjdeš s Herkulesom na rande?</p>
     <h2 class="sec-h">Prihláška na 13. úlohu</h2>
-    <p class="sec-lead">Hľadá niekoho, komu bude dávať energiu a kto bude dávať energiu jemu. Stačí meno a kontakt, zvyšok vymyslíte spolu.</p>
-
-    <div class="slots" aria-live="polite">Voľné termíny: <b id="volne">13</b> z 13</div>
+    <p class="only">Tá pravá môže byť len <b>jedna</b>.</p>
+    <p class="sec-lead">Hľadá niekoho, komu bude dávať energiu a kto bude dávať energiu jemu. Slniečko je len jedno, tak si túto príležitosť nenechaj ujsť.</p>
 
     <form id="forma" novalidate>
       <div>
@@ -293,8 +302,21 @@ footer small{display:block;opacity:.7;margin-top:18px}
         <input type="text" id="meno" name="meno" maxlength="60" autocomplete="given-name" required>
       </div>
       <div>
-        <label class="l" for="kontakt">Instagram alebo telefón</label>
-        <input type="text" id="kontakt" name="kontakt" maxlength="80" autocomplete="off" placeholder="@meno alebo +421..." required>
+        <label class="l" for="instagram">Instagram</label>
+        <input type="text" id="instagram" name="instagram" maxlength="60" autocomplete="off" autocapitalize="none" placeholder="@meno">
+      </div>
+      <div>
+        <label class="l" for="telefon">Telefón</label>
+        <input type="text" id="telefon" name="telefon" maxlength="30" inputmode="tel" autocomplete="tel" placeholder="+421...">
+        <p class="note" style="margin-top:6px">Stačí aspoň jedno z dvoch, Instagram alebo telefón.</p>
+      </div>
+      <div>
+        <label class="l" for="film">Tvoj obľúbený film</label>
+        <input type="text" id="film" name="film" maxlength="100" autocomplete="off" required>
+      </div>
+      <div>
+        <label class="l" for="rande">Kam by si chcela, aby ťa Herkules zobral na rande? <span class="opt">(nepovinné)</span></label>
+        <textarea id="rande" name="rande" maxlength="300"></textarea>
       </div>
       <div role="group" aria-labelledby="terminL">
         <span class="l-t" id="terminL">Kedy ti to vyhovuje? <span class="opt">(nepovinné)</span></span>
@@ -306,10 +328,6 @@ footer small{display:block;opacity:.7;margin-top:18px}
           <input type="radio" name="termin" id="t4" value="Večer po práci"><label for="t4">Večer po práci</label>
           <input type="radio" name="termin" id="t5" value="Som flexi"><label for="t5">Som flexi</label>
         </div>
-      </div>
-      <div>
-        <label class="l" for="rande">Kam by si Herkula vzala na prvé rande? <span class="opt">(nepovinné)</span></label>
-        <textarea id="rande" name="rande" maxlength="300"></textarea>
       </div>
       <div>
         <label class="l" for="odkaz">Odkaz pre Herkula <span class="opt">(nepovinné)</span></label>
@@ -346,46 +364,41 @@ footer small{display:block;opacity:.7;margin-top:18px}
   try{console.log('%cHerkules tu nič nehľadaj, radšej sa prihlás.','font:italic 700 18px Georgia;color:#740B1D');
   console.log('Trinásta úloha čaká na: #prihlaska');}catch(e){}
 
-  // Prehrať jeho ÁNO
-  var audio=$('anoAudio'),bub=$('bublina'),t;
-  function showBubble(){bub.classList.add('on');clearTimeout(t);t=setTimeout(function(){bub.classList.remove('on')},1600)}
-  $('anoBtn').addEventListener('click',function(){
-    showBubble();
-    function play(){try{audio.currentTime=0;var p=audio.play();if(p&&p.catch)p.catch(function(){})}catch(e){}}
-    if(audio.getAttribute('src')){play();return}
-    fetch('/ano.mp3',{method:'HEAD'}).then(function(r){
-      var ct=r.headers.get('content-type')||'';
-      if(r.ok&&ct.indexOf('audio')===0){audio.src='/ano.mp3';play()}
-    }).catch(function(){});
-  });
+  // Ilustracie: priprava ciar na dokreslovanie a odhalenie pri scrolle
+  var NS=document.querySelectorAll('.ilu path,.ilu circle,.ilu ellipse,.ilu rect,.ilu line');
+  for(var i=0;i<NS.length;i++){var el=NS[i];if(!el.classList.contains('ac')){el.setAttribute('pathLength','1');el.classList.add('dr')}}
+  var scenes=document.querySelectorAll('.scenes .scene');
+  function show(el){el.classList.add('in')}
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){show(e.target);io.unobserve(e.target)}})},{threshold:.3,rootMargin:'0px 0px -8% 0px'});
+    for(var j=0;j<scenes.length;j++)io.observe(scenes[j]);
+  }else{for(var k=0;k<scenes.length;k++)show(scenes[k])}
 
-  // XIII. úloha
+  // XIII. uloha
   var x=$('xiii'),xb=$('xiiiBtn');
   xb.addEventListener('click',function(){
-    var open=!x.classList.contains('open');
     x.classList.add('open');xb.setAttribute('aria-expanded','true');
-    if(open){setTimeout(function(){$('prihlaska').scrollIntoView({behavior:'smooth'})},1100)}
+    var rev=$('xiiiRev');setTimeout(function(){show(rev)},30);
+    setTimeout(function(){$('prihlaska').scrollIntoView({behavior:'smooth'})},2600);
   });
 
-  // Počítadlo
-  function setVolne(v){if(typeof v==='number')$('volne').textContent=v}
-  fetch('/api/stav').then(function(r){return r.json()}).then(function(d){setVolne(d.volne)}).catch(function(){});
-
-  // Odoslanie prihlášky
+  // Odoslanie prihlasky
   var f=$('forma'),err=$('err'),send=$('send');
-  function showErr(m){err.textContent=m;err.classList.add('on')}
+  function showErr(m,id){err.textContent=m;err.classList.add('on');if(id)$(id).focus()}
   f.addEventListener('submit',function(e){
     e.preventDefault();err.classList.remove('on');
     var fd=new FormData(f);
-    var body={meno:(fd.get('meno')||'').trim(),kontakt:(fd.get('kontakt')||'').trim(),termin:fd.get('termin')||'',rande:(fd.get('rande')||'').trim(),odkaz:(fd.get('odkaz')||'').trim(),web:fd.get('web')||''};
-    if(body.meno.length<2){showErr('Napíš aspoň svoje meno.');$('meno').focus();return}
-    if(body.kontakt.length<3){showErr('Potrebujeme Instagram alebo telefón, aby sa ti Herkules mohol ozvať.');$('kontakt').focus();return}
+    var g=function(k){return (fd.get(k)||'').toString().trim()};
+    var body={meno:g('meno'),instagram:g('instagram'),telefon:g('telefon'),film:g('film'),rande:g('rande'),termin:fd.get('termin')||'',odkaz:g('odkaz'),web:g('web')};
+    if(body.meno.length<2)return showErr('Napíš aspoň svoje meno.','meno');
+    if(!body.instagram&&!body.telefon)return showErr('Potrebujeme Instagram alebo telefón, aby sa ti Herkules mohol ozvať.','instagram');
+    if(body.telefon&&body.telefon.replace(/\D/g,'').length<9)return showErr('Telefón vyzerá nekompletne. Napíš ho aj s predvoľbou, napr. +421...','telefon');
+    if(body.film.length<2)return showErr('Napíš svoj obľúbený film.','film');
     send.disabled=true;send.textContent='Posielam...';
     fetch('/api/prihlaska',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)})
       .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d}})})
       .then(function(res){
         if(!res.ok||!res.d.ok){throw new Error(res.d&&res.d.chyba||'Niečo sa pokazilo. Skús to znova.')}
-        setVolne(res.d.volne);
         f.style.display='none';
         var th=$('thanks');th.classList.add('on');th.focus();th.scrollIntoView({behavior:'smooth',block:'center'});
       })

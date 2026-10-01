@@ -6,5 +6,6 @@ CREATE TABLE IF NOT EXISTS prihlasky (
   termin TEXT,
   rande TEXT,
   sprava TEXT,
-  ua TEXT
+  ua TEXT,
+  film TEXT
 );
