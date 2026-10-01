@@ -1,5 +1,6 @@
 // randesherkulesom.com: statické stránky + malé API na prihlášky (D1).
 const APEX = 'randesherkulesom.com';
+const CANON = 'www.' + APEX;
 
 const SEC_HEADERS = {
   'x-content-type-options': 'nosniff',
@@ -129,9 +130,9 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    // www presmerujeme na hlavnú doménu
-    if (url.hostname === 'www.' + APEX) {
-      url.hostname = APEX;
+    // hlavná adresa je www, holú doménu (ak by sem niekedy mierila) presmerujeme
+    if (url.hostname === APEX) {
+      url.hostname = CANON;
       return Response.redirect(url.toString(), 301);
     }
 
