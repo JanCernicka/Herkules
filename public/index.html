@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rande s Herkulesom | Kapitola II, mýtus pokračuje</title>
+<meta name="description" content="Herkules splnil 12 úloh. Ostáva mu 13.: nájsť slniečko. Pôjdeš s Herkulesom na rande?">
+<meta name="theme-color" content="#740B1D">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="sk_SK">
+<meta property="og:title" content="Rande s Herkulesom">
+<meta property="og:description" content="Mýtus pokračuje. Herkules splnil 12 úloh, ostáva mu 13.: nájsť slniečko.">
+<meta property="og:url" content="https://randesherkulesom.com">
+<meta property="og:image" content="https://randesherkulesom.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://randesherkulesom.com/og.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23740B1D'/%3E%3Ctext x='50' y='70' font-size='64' text-anchor='middle' fill='%23C0CB4A' font-family='Georgia' font-style='italic' font-weight='700'%3EH%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,500;1,9..144,700;1,9..144,800&family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bordo:#740B1D; --bordo-tm:#560815;
+  --modra:#004890; --navy:#0B2A5B;
+  --lime:#C0CB4A; --krem:#F6EFE6; --piesok:#E8D3B5;
+  --text:#2a1217; --text-sv:#5b3b41;
+  --serif:'Fraunces',Georgia,'Times New Roman',serif;
+  --sans:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--sans);font-size:17px;line-height:1.6;color:var(--text);background:var(--krem);overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{width:100%;max-width:1080px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:var(--serif);font-style:italic;font-weight:700;line-height:1.08;letter-spacing:-.01em}
+.kicker{font-size:13px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+:focus-visible{outline:3px solid var(--lime);outline-offset:3px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font:800 17px/1 var(--sans);border:0;border-radius:999px;padding:17px 28px;cursor:pointer;text-decoration:none;transition:transform .15s,box-shadow .15s;min-height:52px}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 0 rgba(0,0,0,.18)}
+.btn:active{transform:translateY(0);box-shadow:none}
+.btn-lime{background:var(--lime);color:var(--bordo-tm)}
+.btn-line{background:transparent;color:var(--krem);border:2px solid rgba(246,239,230,.55)}
+.btn-bordo{background:var(--bordo);color:var(--krem)}
+
+/* HERO */
+.hero{background:var(--bordo);color:var(--krem);padding:56px 0 64px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-120px;top:-120px;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(192,203,74,.28),rgba(192,203,74,0) 68%);pointer-events:none}
+.hero .kicker{color:var(--lime);margin-bottom:18px}
+.hero h1{font-size:clamp(46px,12vw,104px);font-weight:800;margin-bottom:20px}
+.hero .sub{font-size:clamp(18px,3.4vw,22px);max-width:34ch;color:#f3e3d8;margin-bottom:30px}
+.hero .sub b{color:var(--lime);font-weight:700}
+.hero-grid{display:grid;gap:36px;position:relative;z-index:1}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 30px;max-width:520px}
+.stat{border:1.5px solid rgba(246,239,230,.3);border-radius:18px;padding:14px 10px;text-align:center}
+.stat b{display:block;font:italic 800 clamp(26px,7vw,40px)/1 var(--serif);color:var(--lime)}
+.stat span{display:block;font-size:13px;margin-top:6px;color:#f3e3d8}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.bubble-wrap{position:relative;display:inline-block}
+.bubble{position:absolute;left:50%;bottom:calc(100% + 12px);transform:translate(-50%,8px) scale(.9);background:var(--krem);color:var(--bordo);font:italic 800 28px/1 var(--serif);padding:12px 22px;border-radius:22px;opacity:0;pointer-events:none;transition:all .25s;white-space:nowrap}
+.bubble::after{content:"";position:absolute;left:50%;top:100%;transform:translateX(-50%);border:9px solid transparent;border-top-color:var(--krem)}
+.bubble.on{opacity:1;transform:translate(-50%,0) scale(1)}
+.hero-photo{border-radius:28px;overflow:hidden;aspect-ratio:4/5;max-width:420px;border:3px solid rgba(246,239,230,.2)}
+
+/* placeholdery fotiek */
+.ph{width:100%;height:100%;min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;background:linear-gradient(160deg,var(--piesok),#d9bd97);color:var(--bordo);padding:20px}
+.ph b{font:italic 800 clamp(30px,8vw,44px)/1 var(--serif)}
+.ph span{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;opacity:.7}
+.hero .ph{background:linear-gradient(160deg,#8d1830,#5c0a19);color:var(--lime)}
+.hero .ph span{color:#f3e3d8}
+
+section{padding:72px 0}
+.sec-h{font-size:clamp(32px,7vw,54px);margin-bottom:14px}
+.sec-lead{color:var(--text-sv);max-width:46ch;margin-bottom:34px}
+
+/* GALERIA */
+.gal{display:grid;gap:16px;grid-template-columns:1fr;margin-bottom:34px}
+.shot{background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 2px 0 rgba(116,11,29,.08)}
+.shot .im{aspect-ratio:4/3}
+.shot .im img{width:100%;height:100%;object-fit:cover}
+.shot p{padding:14px 18px 18px;font-weight:700}
+.shot p small{display:block;font-weight:500;color:var(--text-sv);margin-top:2px}
+.facts{display:grid;gap:14px;grid-template-columns:1fr}
+.fact{background:var(--navy);color:var(--krem);border-radius:22px;padding:24px 24px 26px}
+.fact .kicker{color:var(--lime);margin-bottom:8px;font-size:12px}
+.fact p{font:italic 500 21px/1.35 var(--serif)}
+.flags{display:grid;gap:14px;margin-top:14px;grid-template-columns:1fr}
+.flag{border-radius:22px;padding:22px 24px;background:var(--piesok)}
+.flag h3{font-size:22px;margin-bottom:10px;color:var(--bordo)}
+.flag ul{list-style:none;display:grid;gap:6px;font-size:16px}
+.flag li::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:10px;background:var(--modra)}
+.flag.red li::before{background:var(--bordo)}
+
+/* ULOHY */
+.ulohy{background:var(--navy);color:var(--krem)}
+.ulohy .sec-lead{color:#c9d6ee}
+.ulohy .kicker{color:var(--lime);margin-bottom:12px}
+.tasks{list-style:none;display:grid;gap:0;max-width:760px}
+.tasks li{display:grid;grid-template-columns:62px 1fr;gap:14px;align-items:baseline;padding:15px 0;border-bottom:1px solid rgba(246,239,230,.16)}
+.tasks .rim{font:italic 800 24px/1 var(--serif);color:var(--lime)}
+.tasks .t{font-size:17px}
+.tasks .t b{font-weight:800}
+.tasks .t span{color:#c9d6ee}
+.xiii{margin-top:30px;max-width:760px}
+.xiii button{width:100%;text-align:left;cursor:pointer;display:grid;grid-template-columns:62px 1fr auto;gap:14px;align-items:center;font:inherit;color:var(--bordo-tm);background:var(--lime);border:0;border-radius:22px;padding:20px 22px;transition:transform .15s,box-shadow .15s}
+.xiii button:hover{transform:translateY(-2px);box-shadow:0 8px 0 rgba(0,0,0,.25)}
+.xiii .rim{font:italic 800 28px/1 var(--serif)}
+.xiii .q{font-weight:800;font-size:18px}
+.xiii .q small{display:block;font-weight:500;font-size:14px;opacity:.8}
+.xiii .arrow{font-size:26px;font-weight:800}
+.xiii.open button{background:var(--krem)}
+.xiii .reveal{display:none;margin-top:14px;font:italic 800 clamp(32px,8vw,56px)/1.05 var(--serif);color:var(--lime)}
+.xiii.open .reveal{display:block;animation:pop .5s ease both}
+@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.96)}to{opacity:1;transform:none}}
+
+/* PRIHLASKA */
+.form-sec{background:var(--krem)}
+.slots{display:inline-flex;align-items:center;gap:10px;background:var(--bordo);color:var(--krem);border-radius:999px;padding:9px 18px;font-weight:800;font-size:15px;margin-bottom:22px}
+.slots b{color:var(--lime);font-family:var(--serif);font-style:italic;font-size:20px}
+form{background:#fff;border-radius:28px;padding:26px 22px 28px;max-width:640px;box-shadow:0 2px 0 rgba(116,11,29,.1);display:grid;gap:20px}
+label.l,.l-t{display:block;font-weight:800;font-size:15px;margin-bottom:7px}
+.opt{font-weight:500;color:var(--text-sv)}
+input[type=text],textarea{width:100%;font:500 17px/1.4 var(--sans);color:var(--text);background:var(--krem);border:2px solid var(--piesok);border-radius:16px;padding:14px 16px;min-height:52px}
+input[type=text]:focus,textarea:focus{outline:none;border-color:var(--bordo);background:#fff}
+textarea{min-height:92px;resize:vertical}
+.chips{display:flex;flex-wrap:wrap;gap:8px;position:relative}
+.chips input{position:absolute;top:0;left:0;width:1px;height:1px;opacity:0;pointer-events:none}
+.chips label{cursor:pointer;border:2px solid var(--piesok);background:var(--krem);border-radius:999px;padding:10px 16px;font-weight:700;font-size:15px;transition:all .15s;user-select:none}
+.chips input:checked+label{background:var(--bordo);border-color:var(--bordo);color:var(--krem)}
+.chips input:focus-visible+label{outline:3px solid var(--lime);outline-offset:2px}
+.hp{position:absolute!important;left:-9999px;width:1px;height:1px;overflow:hidden}
+.note{font-size:14px;color:var(--text-sv)}
+.err{display:none;background:#fde8e8;color:#8a1020;border-radius:14px;padding:12px 16px;font-weight:700;font-size:15px}
+.err.on{display:block}
+form .btn{width:100%;font-size:22px;font-family:var(--serif);font-style:italic;padding:18px}
+form .btn[disabled]{opacity:.6;cursor:wait;transform:none;box-shadow:none}
+.thanks{display:none;background:var(--bordo);color:var(--krem);border-radius:28px;padding:34px 26px;max-width:640px}
+.thanks h3{font-size:clamp(34px,9vw,52px);color:var(--lime);margin-bottom:12px}
+.thanks.on{display:block;animation:pop .5s ease both}
+
+/* PATICKA */
+footer{background:var(--bordo-tm);color:#f3e3d8;padding:42px 0 48px;font-size:15px}
+footer p+p{margin-top:12px}
+footer .big{font:italic 700 22px/1.2 var(--serif);color:var(--krem)}
+footer small{display:block;opacity:.7;margin-top:18px}
+
+@media (min-width:720px){
+  body{font-size:18px}
+  section{padding:96px 0}
+  .hero{padding:84px 0 92px}
+  .hero-grid{grid-template-columns:1.25fr .75fr;align-items:center}
+  .hero-photo{justify-self:end;width:100%}
+  .gal{grid-template-columns:repeat(3,1fr)}
+  .facts,.flags{grid-template-columns:1fr 1fr}
+  form{padding:36px 36px 38px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="kicker">Kapitola II</p>
+      <h1>Mýtus pokračuje.</h1>
+      <p class="sub">Herkules splnil 12 úloh. Ostáva mu <b>13.</b> a tá najťažšia: nájsť slniečko.</p>
+      <div class="stats" aria-label="Herkules v číslach">
+        <div class="stat"><b>25</b><span>rokov</span></div>
+        <div class="stat"><b>185</b><span>cm</span></div>
+        <div class="stat"><b>1</b><span>slovo: ÁNO</span></div>
+      </div>
+      <div class="cta-row">
+        <span class="bubble-wrap">
+          <span class="bubble" id="bublina" aria-hidden="true">ÁNO.</span>
+          <button class="btn btn-lime" id="anoBtn" type="button">Prehrať jeho ÁNO</button>
+        </span>
+        <a class="btn btn-line" href="#prihlaska">Prihlásiť sa na rande</a>
+      </div>
+      <audio id="anoAudio" preload="none"><!-- TODO: po dodaní nahrávky nastav src="/ano.mp3" (skript ju skúsi nájsť aj sám) --></audio>
+    </div>
+    <div class="hero-photo">
+      <!-- TODO: fotka hero. Vlož <img src="/img/hero.jpg" alt="Dominik, prezývka Herkules" width="840" height="1050"> namiesto .ph -->
+      <div class="ph"><b>Herkules</b><span>foto čoskoro</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="zvysok">
+  <div class="wrap">
+    <p class="kicker" style="color:var(--bordo);margin-bottom:12px">Pitch pokračuje</p>
+    <h2 class="sec-h">Čo sa do 5 minút nezmestilo</h2>
+    <p class="sec-lead">Muž dvoch tvárí. Žije pre fitko a filmy, a popritom je grafik, ktorý maľuje a 3D tlačí. Stoicizmus si dá s Marcom Aureliom, komiks neodmietne.</p>
+
+    <div class="gal">
+      <figure class="shot">
+        <div class="im">
+          <!-- TODO: g1.jpg (fitko). Vlož <img src="/img/g1.jpg" alt="Herkules vo fitku" loading="lazy" width="1200" height="900"> namiesto .ph -->
+          <div class="ph"><b>Fitko</b><span>foto čoskoro</span></div>
+        </div>
+        <p>Fitko je svätá omša<small>Red flag, ale s láskou.</small></p>
+      </figure>
+      <figure class="shot">
+        <div class="im">
+          <!-- TODO: g2.jpg (obraz / 3D tlač). Vlož <img src="/img/g2.jpg" alt="Herkulova tvorba" loading="lazy" width="1200" height="900"> namiesto .ph -->
+          <div class="ph"><b>Tvorba</b><span>foto čoskoro</span></div>
+        </div>
+        <p>Grafik, maľuje, 3D tlačí<small>Z prázdneho stola urobí vec.</small></p>
+      </figure>
+      <figure class="shot">
+        <div class="im">
+          <!-- TODO: g3.jpg (varenie). Vlož <img src="/img/g3.jpg" alt="Herkules pri varení" loading="lazy" width="1200" height="900"> namiesto .ph -->
+          <div class="ph"><b>Varenie</b><span>foto čoskoro</span></div>
+        </div>
+        <p>Varí brutálne dobre<small>Pozvánka na večeru nie je výhovorka, je to plán.</small></p>
+      </figure>
+    </div>
+
+    <div class="facts">
+      <!-- TODO: nahraď fun fact 1 a 2 vlastnými (zatiaľ sú tu fakty z pitchu) -->
+      <div class="fact"><p class="kicker">Fun fact 1</p><p>Má nos našej partie: vycíti, čo ťa trápi, skôr než to povieš.</p></div>
+      <div class="fact"><p class="kicker">Fun fact 2</p><p>Je down na akýkoľvek sidequest. Kamoši jeho ÁNO citujú.</p></div>
+    </div>
+
+    <div class="flags">
+      <div class="flag">
+        <h3>Green flags</h3>
+        <ul>
+          <li>Podrží ti nebo, ako Herkules Atlasovi</li>
+          <li>Pre kamaráta ide aj do podsvetia</li>
+          <li>Pri ňom sa cítiš bezpečne a vypočutá</li>
+          <li>Spontánny, hravý, bez pretvárky</li>
+        </ul>
+      </div>
+      <div class="flag red">
+        <h3>Red flags (s láskou)</h3>
+        <ul>
+          <li>ÁNO syndróm</li>
+          <li>Drsný čierny humor</li>
+          <li>Fitko je svätá omša</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ulohy" id="ulohy">
+  <div class="wrap">
+    <p class="kicker">Mýtus</p>
+    <h2 class="sec-h">12 úloh, ktoré už splnil</h2>
+    <p class="sec-lead">Pôvodný Herkules mal 12 vypätých prác. Tento si poradil s týmito.</p>
+    <!-- TODO: zoznam je návrh, uprav podľa potreby -->
+    <ol class="tasks" style="list-style:none">
+      <li><span class="rim">I.</span><span class="t"><b>Nemejský lev.</b> <span>Fitko dobyté. Rep po repe, týždeň po týždni.</span></span></li>
+      <li><span class="rim">II.</span><span class="t"><b>Lernajská hydra.</b> <span>Zachoval pokoj ako Marcus Aurelius, aj keď narástli dve hlavy namiesto jednej.</span></span></li>
+      <li><span class="rim">III.</span><span class="t"><b>Kerynejská laň.</b> <span>Dohonil film, ktorý videli všetci okrem neho.</span></span></li>
+      <li><span class="rim">IV.</span><span class="t"><b>Erymantský kanec.</b> <span>Uvaril večeru, po ktorej sa kamoši vracajú.</span></span></li>
+      <li><span class="rim">V.</span><span class="t"><b>Augiášove chlievy.</b> <span>Vyčistil dielňu po 3D tlači. Za jeden deň.</span></span></li>
+      <li><span class="rim">VI.</span><span class="t"><b>Stymfalské vtáky.</b> <span>Zostrelil všetky zlé nápady v návrhu grafiky.</span></span></li>
+      <li><span class="rim">VII.</span><span class="t"><b>Krétsky býk.</b> <span>Prekonal vlastný osobák v posilke.</span></span></li>
+      <li><span class="rim">VIII.</span><span class="t"><b>Diomédove kone.</b> <span>Povedal ÁNO sidequestu bez toho, aby vedel, kam to vedie.</span></span></li>
+      <li><span class="rim">IX.</span><span class="t"><b>Opasok Hippolyty.</b> <span>Dodržal slovo kamarátovi, aj keď to stálo celý víkend.</span></span></li>
+      <li><span class="rim">X.</span><span class="t"><b>Gerýonove stáda.</b> <span>Zvládol fitko, grafiku aj film v jeden deň.</span></span></li>
+      <li><span class="rim">XI.</span><span class="t"><b>Zlaté jablká Hesperidiek.</b> <span>Podržal nebo kamošovi. Ako Herkules Atlasovi.</span></span></li>
+      <li><span class="rim">XII.</span><span class="t"><b>Cerberus.</b> <span>Zišiel do podsvetia za kamošom a vrátil sa aj s ním.</span></span></li>
+    </ol>
+
+    <div class="xiii" id="xiii">
+      <button type="button" id="xiiiBtn" aria-expanded="false" aria-controls="xiiiRev">
+        <span class="rim">XIII.</span>
+        <span class="q">Posledná úloha<small>Klikni a zisti, čo ostáva</small></span>
+        <span class="arrow" aria-hidden="true">?</span>
+      </button>
+      <p class="reveal" id="xiiiRev" aria-live="polite">Nájsť slniečko ☀</p>
+    </div>
+  </div>
+</section>
+
+<section class="form-sec" id="prihlaska">
+  <div class="wrap">
+    <p class="kicker" style="color:var(--bordo);margin-bottom:12px">Pôjdeš s Herkulesom na rande?</p>
+    <h2 class="sec-h">Prihláška na 13. úlohu</h2>
+    <p class="sec-lead">Hľadá niekoho, komu bude dávať energiu a kto bude dávať energiu jemu. Stačí meno a kontakt, zvyšok vymyslíte spolu.</p>
+
+    <div class="slots" aria-live="polite">Voľné termíny: <b id="volne">13</b> z 13</div>
+
+    <form id="forma" novalidate>
+      <div>
+        <label class="l" for="meno">Meno</label>
+        <input type="text" id="meno" name="meno" maxlength="60" autocomplete="given-name" required>
+      </div>
+      <div>
+        <label class="l" for="kontakt">Instagram alebo telefón</label>
+        <input type="text" id="kontakt" name="kontakt" maxlength="80" autocomplete="off" placeholder="@meno alebo +421..." required>
+      </div>
+      <div role="group" aria-labelledby="terminL">
+        <span class="l-t" id="terminL">Kedy ti to vyhovuje? <span class="opt">(nepovinné)</span></span>
+        <!-- TODO: uprav možnosti termínov podľa skutočných dátumov -->
+        <div class="chips">
+          <input type="radio" name="termin" id="t1" value="Tento týždeň"><label for="t1">Tento týždeň</label>
+          <input type="radio" name="termin" id="t2" value="Budúci týždeň"><label for="t2">Budúci týždeň</label>
+          <input type="radio" name="termin" id="t3" value="Víkend"><label for="t3">Víkend</label>
+          <input type="radio" name="termin" id="t4" value="Večer po práci"><label for="t4">Večer po práci</label>
+          <input type="radio" name="termin" id="t5" value="Som flexi"><label for="t5">Som flexi</label>
+        </div>
+      </div>
+      <div>
+        <label class="l" for="rande">Kam by si Herkula vzala na prvé rande? <span class="opt">(nepovinné)</span></label>
+        <textarea id="rande" name="rande" maxlength="300"></textarea>
+      </div>
+      <div>
+        <label class="l" for="odkaz">Odkaz pre Herkula <span class="opt">(nepovinné)</span></label>
+        <input type="text" id="odkaz" name="odkaz" maxlength="300" placeholder="Čo mu chceš povedať?">
+      </div>
+      <div class="hp" aria-hidden="true"><label>Web <input type="text" name="web" tabindex="-1" autocomplete="off"></label></div>
+      <div class="err" id="err" role="alert"></div>
+      <button class="btn btn-bordo" type="submit" id="send">ÁNO.</button>
+      <p class="note">Prihlášky vidí len Dominik. Po akcii ich všetky vymažeme. Nikam ich neposielame a nikomu ich nedávame.</p>
+    </form>
+
+    <div class="thanks" id="thanks" role="status" tabindex="-1">
+      <h3>ÁNO.</h3>
+      <p>Máš to. Herkules sa ti ozve na kontakte, ktorý si nechala. Do tej doby si užívaj slniečko.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="big">Kapitola II, mýtus pokračuje.</p>
+    <p>Herkules vraj čistil Augiášove chlievy jeden deň. Pri tvorbe tejto stránky sme žiadne chlievy nemuseli čistiť: nič nepredávame, nič nezverejňujeme a po akcii všetko zmažeme.</p>
+    <small>Pitch Your Single Friend SK, Sundeck Bratislava.</small>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+  var $=function(id){return document.getElementById(id)};
+
+  // Easter egg v konzole
+  try{console.log('%cHerkules tu nič nehľadaj, radšej sa prihlás.','font:italic 700 18px Georgia;color:#740B1D');
+  console.log('Trinásta úloha čaká na: #prihlaska');}catch(e){}
+
+  // Prehrať jeho ÁNO
+  var audio=$('anoAudio'),bub=$('bublina'),t;
+  function showBubble(){bub.classList.add('on');clearTimeout(t);t=setTimeout(function(){bub.classList.remove('on')},1600)}
+  $('anoBtn').addEventListener('click',function(){
+    showBubble();
+    function play(){try{audio.currentTime=0;var p=audio.play();if(p&&p.catch)p.catch(function(){})}catch(e){}}
+    if(audio.getAttribute('src')){play();return}
+    fetch('/ano.mp3',{method:'HEAD'}).then(function(r){
+      var ct=r.headers.get('content-type')||'';
+      if(r.ok&&ct.indexOf('audio')===0){audio.src='/ano.mp3';play()}
+    }).catch(function(){});
+  });
+
+  // XIII. úloha
+  var x=$('xiii'),xb=$('xiiiBtn');
+  xb.addEventListener('click',function(){
+    var open=!x.classList.contains('open');
+    x.classList.add('open');xb.setAttribute('aria-expanded','true');
+    if(open){setTimeout(function(){$('prihlaska').scrollIntoView({behavior:'smooth'})},1100)}
+  });
+
+  // Počítadlo
+  function setVolne(v){if(typeof v==='number')$('volne').textContent=v}
+  fetch('/api/stav').then(function(r){return r.json()}).then(function(d){setVolne(d.volne)}).catch(function(){});
+
+  // Odoslanie prihlášky
+  var f=$('forma'),err=$('err'),send=$('send');
+  function showErr(m){err.textContent=m;err.classList.add('on')}
+  f.addEventListener('submit',function(e){
+    e.preventDefault();err.classList.remove('on');
+    var fd=new FormData(f);
+    var body={meno:(fd.get('meno')||'').trim(),kontakt:(fd.get('kontakt')||'').trim(),termin:fd.get('termin')||'',rande:(fd.get('rande')||'').trim(),odkaz:(fd.get('odkaz')||'').trim(),web:fd.get('web')||''};
+    if(body.meno.length<2){showErr('Napíš aspoň svoje meno.');$('meno').focus();return}
+    if(body.kontakt.length<3){showErr('Potrebujeme Instagram alebo telefón, aby sa ti Herkules mohol ozvať.');$('kontakt').focus();return}
+    send.disabled=true;send.textContent='Posielam...';
+    fetch('/api/prihlaska',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)})
+      .then(function(r){return r.json().then(function(d){return{ok:r.ok,d:d}})})
+      .then(function(res){
+        if(!res.ok||!res.d.ok){throw new Error(res.d&&res.d.chyba||'Niečo sa pokazilo. Skús to znova.')}
+        setVolne(res.d.volne);
+        f.style.display='none';
+        var th=$('thanks');th.classList.add('on');th.focus();th.scrollIntoView({behavior:'smooth',block:'center'});
+      })
+      .catch(function(er){showErr(er.message||'Niečo sa pokazilo. Skús to znova.');send.disabled=false;send.textContent='ÁNO.'});
+  });
+})();
+</script>
+</body>
+</html>
