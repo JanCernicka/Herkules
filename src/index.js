@@ -41,7 +41,35 @@ async function safeEqual(a, b) {
   return crypto.subtle.timingSafeEqual(ha, hb);
 }
 
-async function prihlaska(request, env) {
+// Oznámenie o novej prihláške e-mailom (Resend). Bez nastavených secretov sa nič nepošle a prihláška sa uloží normálne.
+async function posliEmail(env, d) {
+  if (!env.RESEND_API_KEY || !env.NOTIFY_EMAIL) return;
+  const riadky = [
+    `Meno: ${d.meno}`,
+    `Kontakt: ${d.kontakt}`,
+    `Obľúbený film: ${d.film}`,
+    `Termín: ${d.termin || '-'}`,
+    `Kam na rande: ${d.rande || '-'}`,
+    `Odkaz pre Herkula: ${d.sprava || '-'}`,
+  ];
+  try {
+    const res = await fetch(env.RESEND_API_URL || 'https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, 'content-type': 'application/json' },
+      body: JSON.stringify({
+        from: env.FROM_EMAIL || 'Rande s Herkulesom <onboarding@resend.dev>',
+        to: String(env.NOTIFY_EMAIL).split(',').map((x) => x.trim()).filter(Boolean),
+        subject: `Nová prihláška: ${d.meno}`,
+        text: riadky.join('\n'),
+      }),
+    });
+    if (!res.ok) console.error('email zlyhal', res.status);
+  } catch (e) {
+    console.error('email chyba', e && e.message);
+  }
+}
+
+async function prihlaska(request, env, ctx) {
   const origin = request.headers.get('origin');
   if (origin && new URL(origin).host !== new URL(request.url).host) {
     return json({ ok: false, chyba: 'Nepovolený pôvod.' }, 403);
@@ -93,6 +121,7 @@ async function prihlaska(request, env) {
     await env.DB.prepare('INSERT INTO prihlasky (meno, kontakt, termin, rande, sprava, ua, film) VALUES (?, ?, ?, ?, ?, ?, ?)')
       .bind(meno, kontakt, termin, rande, sprava, ua, film)
       .run();
+    ctx.waitUntil(posliEmail(env, { meno, kontakt, film, termin, rande, sprava }));
   }
   return json({ ok: true });
 }
@@ -121,13 +150,13 @@ async function olymp(url, env) {
     .join('');
   const html = `<!doctype html><html lang="sk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Olymp</title>
 <style>body{font:15px/1.5 system-ui,sans-serif;background:#F6EFE6;color:#2a1217;margin:0;padding:24px}h1{font-family:Georgia,serif;font-style:italic;color:#740B1D;margin:0 0 4px}p{margin:0 0 16px}.w{overflow-x:auto}table{border-collapse:collapse;min-width:100%;background:#fff}th,td{border:1px solid #E8D3B5;padding:8px 10px;text-align:left;vertical-align:top}th{background:#740B1D;color:#F6EFE6;white-space:nowrap}</style></head>
-<body><h1>Olymp</h1><p>Prihlášky: <b>${(results || []).length}</b>. Len pre Dominika. Po akcii sa všetko maže.</p>
+<body><h1>Olymp</h1><p>Prihlášky: <b>${(results || []).length}</b>. Len pre Dominika.</p>
 <div class="w"><table><thead><tr><th>#</th><th>Kedy (UTC)</th><th>Meno</th><th>Kontakt</th><th>Obľúbený film</th><th>Termín</th><th>Kam na rande</th><th>Odkaz</th></tr></thead><tbody>${rows || '<tr><td colspan="8">Zatiaľ nikto. Herkules trpezlivo čaká.</td></tr>'}</tbody></table></div></body></html>`;
   return new Response(html, { headers: hdr });
 }
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
     // hlavná adresa je www, holú doménu (ak by sem niekedy mierila) presmerujeme
@@ -139,7 +168,7 @@ export default {
     try {
       if (url.pathname === '/api/prihlaska') {
         if (request.method !== 'POST') return withHeaders(json({ ok: false, chyba: 'Len POST.' }, 405), { allow: 'POST' });
-        return withHeaders(await prihlaska(request, env));
+        return withHeaders(await prihlaska(request, env, ctx));
       }
       if (url.pathname === '/olymp') return withHeaders(await olymp(url, env));
     } catch (e) {
